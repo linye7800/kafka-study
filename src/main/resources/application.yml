@@ -7,3 +7,11 @@ template:
     - {"templateId":"2", "templateFilePath":"/Users/linye/Project/Java/kafka/kafka-study/src/main/resources/template/template.json", "active": false}
   template-result-type: 0
   template-filepath-result: "/Users/linye/Project/Java/kafka/kafka-study/src/main/resources/template/templateResult.json"
+
+wechat:
+  kafka:
+    bootstrap_servers: "172.16.117.4:9092"
+    acks_config: "all"
+    partitioner_class: "com.lincoln.lin.kafkastudy.producer.SamplePartition"
+logging:
+  config: classpath:logback.xml

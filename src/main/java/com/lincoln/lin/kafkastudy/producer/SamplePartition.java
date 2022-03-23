@@ -18,9 +18,7 @@ public class SamplePartition implements Partitioner {
         String keyStr = String.valueOf(key);
         String keyInt = keyStr.substring(5);
         System.out.println("keyStr : " + keyStr + "keyInt : " + keyInt);
-
         int i = Integer.parseInt(keyInt);
-
         return i%2;
     }
 
