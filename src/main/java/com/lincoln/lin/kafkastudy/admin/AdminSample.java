@@ -42,6 +42,7 @@ import org.apache.kafka.common.protocol.types.Field.Str;
 public class AdminSample {
 
     public final static String TOPIC_NAME = "lincoln-topic";
+    public final static String TOPIC_NAME_VINA = "vina-topic";
 
 //    public final static Integer partitions = 2;
 
@@ -50,10 +51,10 @@ public class AdminSample {
         System.out.println(adminClient);
 
         // 创建Topic实例
-        createTopic();
+//        createTopic();
 
 //        //获取Topic列表
-//        topicList();
+        topicList();
 
 //        //删除Topic列表
 //        delTopics();
@@ -74,10 +75,10 @@ public class AdminSample {
 //        describeTopics();
 
         // 增加partition数
-        incrPartitions(2);
+//        incrPartitions(2);
 
         // 描述topic
-        describeTopics();
+//        describeTopics();
     }
 
     /**
@@ -210,9 +211,14 @@ public class AdminSample {
         AdminClient adminClient = adminClient();
         // 副本因子
         Short rs = 1;
-        NewTopic newTopic = new NewTopic(TOPIC_NAME,1,rs);
-        CreateTopicsResult topicsResult = adminClient.createTopics(Collections.singletonList(newTopic));
-        System.out.println("topicsResult:" + topicsResult);
+//        NewTopic newTopic = new NewTopic(TOPIC_NAME,1,rs);
+//        CreateTopicsResult topicsResult = adminClient.createTopics(Collections.singletonList(newTopic));
+//        System.out.println("topicsResult:" + topicsResult);
+
+
+        NewTopic newTopic2 = new NewTopic(TOPIC_NAME_VINA,1,rs);
+        CreateTopicsResult topicsResult2 = adminClient.createTopics(Collections.singletonList(newTopic2));
+        System.out.println("topicsResult:" + topicsResult2);
     }
 
     /**

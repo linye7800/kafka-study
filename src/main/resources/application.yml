@@ -13,5 +13,3 @@ wechat:
     bootstrap_servers: "172.16.117.4:9092"
     acks_config: "all"
     partitioner_class: "com.lincoln.lin.kafkastudy.producer.SamplePartition"
-logging:
-  config: classpath:logback.xml

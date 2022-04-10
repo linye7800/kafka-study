@@ -8,7 +8,6 @@ import com.lincoln.lin.kafkastudy.wechat.service.WechatTemplateService;
 import com.lincoln.lin.kafkastudy.wechat.util.FileUtils;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.Future;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.producer.Producer;
 import org.apache.kafka.clients.producer.ProducerRecord;

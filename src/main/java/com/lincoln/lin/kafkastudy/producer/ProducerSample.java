@@ -1,7 +1,10 @@
 package com.lincoln.lin.kafkastudy.producer;
 
+import com.google.common.collect.Lists;
+import java.util.List;
 import java.util.Properties;
 import java.util.concurrent.Future;
+import org.apache.kafka.clients.Metadata;
 import org.apache.kafka.clients.producer.Callback;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.Producer;
@@ -18,10 +21,11 @@ import org.apache.kafka.clients.producer.RecordMetadata;
 public class ProducerSample {
 
     public final static String TOPIC_NAME = "lincoln-topic";
+    public final static String TOPIC_NAME_VINA = "vina-topic";
 
     public static void main(String[] args) throws Exception {
         // Producer 异步发送
-//        producerSend();
+        producerSend();
 
         // Producer 同步发送 （异步阻塞发送）import org.apache.kafka.common.protocol.types.Field.Str;
 //        producerSyncSend();
@@ -30,7 +34,7 @@ public class ProducerSample {
 //        producerSendWithCallback();
 
         // Producer异步发送带回调函数和Partition负载均衡
-        producerSendWithCallbackAndPartition();
+//        producerSendWithCallbackAndPartition();
     }
 
     /**
@@ -98,6 +102,30 @@ public class ProducerSample {
 
             producer.send(record);
         }
+        List<String> topics = Lists.newArrayList(TOPIC_NAME, TOPIC_NAME_VINA);
+        topics.forEach(
+                topic -> {
+                    for (int i=0; i<100; i++) {
+                        ProducerRecord<String, String> record =
+                                new ProducerRecord<>(topic, "Key--" + i,"Value--" + i);
+
+                        producer.send(record, (metadata, exception) -> {
+                            if (exception != null) {
+                                System.err.println(exception.toString());
+                                return;
+                            }
+                        });
+                    }
+                }
+        );
+
+
+//        for (int i=0; i<100; i++) {
+//            ProducerRecord<String, String> record =
+//                    new ProducerRecord<>(TOPIC_NAME_VINA, "Key--" + i,"Value--" + i);
+//
+//            producer.send(record);
+//        }
         // 所有的通道打开都需要关闭
         producer.close();
     }
@@ -159,12 +187,8 @@ public class ProducerSample {
             ProducerRecord<String, String> record =
                     new ProducerRecord<>(TOPIC_NAME, key,"Value--" + i);
 
-            Future<RecordMetadata> send = producer.send(record, new Callback() {
-                @Override
-                public void onCompletion(RecordMetadata metadata, Exception exception) {
-                    System.out.println(key + " partition : " + metadata.partition() + ", offset : " + metadata.offset());
-                }
-            });
+            Future<RecordMetadata> send = producer.send(record,
+                    (metadata, exception) -> System.out.println(key + " partition : " + metadata.partition() + ", offset : " + metadata.offset()));
         }
         // 所有的通道打开都需要关闭
         producer.close();
